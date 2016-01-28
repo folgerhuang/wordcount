@@ -1,5 +1,6 @@
 package org.sripe.sy;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
@@ -29,6 +30,7 @@ public class WC extends Configured implements Tool {
 		
 		conf.setMapperClass(WCMapper.class);
 		conf.setReducerClass(WCReducer.class);
+		conf.setCombinerClass(WCReducer.class);
 		
 		Path inPath=new Path(args[0]);
 		Path outPath=new Path(args[1]);
@@ -43,7 +45,7 @@ public class WC extends Configured implements Tool {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		int exitcode=ToolRunner.run(new WC(), args);
+		int exitcode=ToolRunner.run(new Configuration(),new WC(), args);
 		System.exit(exitcode);
 	}
 
